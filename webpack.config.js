@@ -1,5 +1,5 @@
 const Path = require('path')
-const {VueLoaderPlugin} = require('vue-loader')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlPlugin=require('html-webpack-plugin')
 const webpack=require('webpack')
 const ExtractPlugin=require("extract-text-webpack-plugin")
@@ -8,10 +8,11 @@ const isDev=process.env.NODE_ENV==='development'
 
 const cfg = {
     mode: isDev?'development':'production',
+    // mode: 'development',
     target:'web',
     entry: Path.join(__dirname, "src/index.js"),
     output: {
-        filename: 'bundle,[hash:8].js',
+        filename: 'bundle.[hash:8].js',
         path: Path.join(__dirname, 'dist')
     },
     module: {
@@ -34,23 +35,25 @@ const cfg = {
                         }
                     }
                 ],
+            }, {
+                test: /\.css$/,
+                use: ['style-loader','css-loader']
             }
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env':{
-                NODE_ENV:isDev?'"development"':'"production"'
-            }
-        }),
+        // new webpack.DefinePlugin({
+        //     'process.env':{
+        //         NODE_ENV:isDev?'"development"':'"production"'
+        //     }
+        // }),
         new VueLoaderPlugin(),
-        new HtmlPlugin({
-            filename:'[name].html'
-        })
+        new HtmlPlugin()
     ]
 }
 
 if(isDev){
+    cfg.devtool='#cheap-module-eval-source-map'
     cfg.module.rules.push({
         test:/\.styl$/,
         use:[
@@ -77,13 +80,17 @@ if(isDev){
     cfg.plugins.push(
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.LoaderOptionsPlugin({
-            options:{
-                devTool:'#cheap-module-eval-source-map'
-            }
-        })
+        // new webpack.LoaderOptionsPlugin({
+        //     options:{
+        //         devTool:'#cheap-module-eval-source-map'
+        //     }
+        // })
     )
 }else{
+    cfg.entry={
+        app:Path.join(__dirname,"src/index.js"),
+        vendor:['vue']
+    }
     cfg.output.filename='[name].[chunkhash:8].js'
     cfg.module.rules.push({
         test:/\.styl$/,
@@ -101,8 +108,29 @@ if(isDev){
             ]
         })
     })
+    cfg.optimization = {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    chunks: 'initial',
+                    minChunks: 2,
+                    maxInitialRequests: 5,
+                    minSize: 0
+                },
+                vendor: {
+                    test: /node_modules/,
+                    chunks: 'initial',
+                    name: 'vendor',
+                    priority: 10,
+                    enforce: true
+                },
+            }
+        },
+        runtimeChunk: true
+    }
+
     cfg.plugins.push(
-        new ExtractPlugin('styles.[contentHash:8].css')
+        new ExtractPlugin('styles.[contentHash:8].css'),
     )
 }
 
