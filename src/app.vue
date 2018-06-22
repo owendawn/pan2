@@ -1,18 +1,20 @@
 <template>
-<div id="text">{{text}}</div>
+    <div id="app">
+        <PNav></PNav>
+        <!-- 对应的组件内容渲染到router-view中 -->
+        <router-view> </router-view>
+    </div>
 
 </template>
 <script>
     export default{
-        data() {
-            return{
-                text: 'hello'
+        data(){
+            return {
+                text:'app'
             }
         }
     }
 </script>
 <style>
-    #text{
-        color:red;
-    }
+
 </style>
