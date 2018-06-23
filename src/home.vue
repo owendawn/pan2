@@ -1,6 +1,7 @@
 <template>
-    <div id="text">
-        <h1>{{text}}</h1>
+    <div>
+        <canvas id="canvas" width="1349" height="404"></canvas>
+        &lt;script src="asserts/home.js">&lt;/script>
     </div>
 </template>
 <script>
@@ -13,7 +14,25 @@
     }
 </script>
 <style>
-    #text{
-        color:red;
+    html {
+        height: 100%;
+        background-image: -webkit-radial-gradient(ellipse farthest-corner at center top, #000d4d 0%, #000105 100%);
+        background-image: radial-gradient(ellipse farthest-corner at center top, #000d4d 0%, #000105 100%);
+        cursor: move;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas{
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 999999999;
+        position: absolute;
     }
 </style>
