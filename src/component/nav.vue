@@ -12,11 +12,11 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <router-link to="/home" class="nav-link">Home</router-link>
+                <li class="nav-item" v-bind:class="{ 'active':isActive('#/home') }">
+                    <router-link to="/home"  :class="['nav-link',{ 'active':isActive('#/home') }]">Home</router-link>
                 </li>
-                <li class="nav-item">
-                    <router-link to="/hello" class="nav-link">hello</router-link>
+                <li class="nav-item" v-bind:class="{ 'active':isActive('#/hello') }">
+                    <router-link to="/hello" :class="['nav-link',{ 'active':isActive('#/hello') }]">hello</router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link">Link</a>
@@ -29,8 +29,27 @@
     </nav>
 </template>
 <script>
+export default {
+    data(){
+        return{
+            href:window.location.href,
+            isShow:false
+        }
+    },
+    methods: {
+        isActive(path){
+            return this.href.indexOf(path) !== -1;
+        },
+        collapse(){
+           $("#collapsibleNavbar").removeClass("show");
+           this.href=window.location.href;
+        }
+    },
+    events:{
 
+    }
+}
 </script>
 <style>
-
+nav{z-index: 999}
 </style>

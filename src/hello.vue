@@ -10,7 +10,10 @@
             return{
                 text: 'haha'
             }
-        }
+        },
+        mounted() {
+            this.$emit('onViewIn', this.items);
+        },
     }
 </script>
 <style>

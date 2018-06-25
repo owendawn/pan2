@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <PNav></PNav>
+        <PNav ref="navbar"></PNav>
         <!-- 对应的组件内容渲染到router-view中 -->
-        <router-view> </router-view>
+        <router-view @onViewIn="viewIned"> </router-view>
     </div>
 
 </template>
@@ -12,6 +12,14 @@
             return {
                 text:'app'
             }
+        },
+        methods:{
+            viewIned(){
+                this.$refs.navbar.collapse();
+            }
+        },
+        mounted(){
+
         }
     }
 </script>
