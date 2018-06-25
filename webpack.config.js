@@ -10,8 +10,8 @@ const cfg = {
     target:'web',
     output: {
         filename: '[name].[chunkhash:8].js',
-        path: 'E:\\xampp\\htdocs\\pan2',
-        // path: Path.join(__dirname, 'dist'),
+        // path: 'E:\\xampp\\htdocs\\pan2',
+        path: Path.join(__dirname, 'dist'),
     },
     entry:{
         app:Path.join(__dirname,"src/index.js"),
