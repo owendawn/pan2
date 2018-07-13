@@ -52,4 +52,7 @@ export default {
 </script>
 <style>
 nav{z-index: 999}
+.bg-dark {
+    background-color: rgba(52, 58, 64,0.9)!important;
+}
 </style>

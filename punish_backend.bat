@@ -1,4 +1,5 @@
-set targets = E:\xampp\htdocs\pan2\backend
+@echo on
+set target=E:\XAMPP\htdocs\pan2\backend
 
 if exist %target% (
     echo dir is exist
@@ -7,6 +8,5 @@ if exist %target% (
 
 mkdir %target%
 
-
-
 xcopy /s/d  .\backend %target%
+

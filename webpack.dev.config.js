@@ -64,6 +64,12 @@ const cfg = {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
     ],
+    resolve: {
+        extensions: ['.js', '.vue', '.json'],
+        alias: {
+            '@': resolve('src'),
+        }
+    },
     devServer:{
         port:8001,
         host:'0.0.0.0',
