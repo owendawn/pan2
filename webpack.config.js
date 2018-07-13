@@ -78,12 +78,6 @@ const cfg = {
             }
         ]
     },
-    resolve: {
-        extensions: ['.js', '.vue', '.json'],
-        alias: {
-            '@': resolve('src'),
-        }
-    },
     plugins: [
         new VueLoaderPlugin(),
         new ExtractPlugin('styles.[contentHash:8].css'),

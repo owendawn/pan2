@@ -5,7 +5,7 @@ import Navbar from './component/nav.vue'
 
 import App from './app.vue'
 import Home from './home.vue'
-import Hello from './hello.vue'
+import Cards from './cards.vue'
 
 Vue.use(VueRouter)
 
@@ -22,8 +22,8 @@ const routes=[
         component:Home
     },
     {
-        path: '/hello',
-        component:Hello
+        path: '/cards',
+        component:Cards
     },
     // // 重定向
     // {

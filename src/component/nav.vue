@@ -13,10 +13,10 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item" v-bind:class="{ 'active':isActive('#/home') }">
-                    <router-link to="/home"  :class="['nav-link',{ 'active':isActive('#/home') }]">Home</router-link>
+                    <router-link to="/home"  :class="['nav-link',{ 'active':isActive('#/home') }]">首页</router-link>
                 </li>
                 <li class="nav-item" v-bind:class="{ 'active':isActive('#/hello') }">
-                    <router-link to="/hello" :class="['nav-link',{ 'active':isActive('#/hello') }]">hello</router-link>
+                    <router-link to="/cards" :class="['nav-link',{ 'active':isActive('#/hello') }]">卡片组</router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link">Link</a>
