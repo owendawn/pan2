@@ -1,5 +1,5 @@
 <?php
-  var_dump($_GET);
+  // var_dump($_GET);
   $url=$_SERVER["REQUEST_URI"];
   $uri=$_SERVER["PHP_SELF"];
   $queryStr=$_SERVER['QUERY_STRING'];
@@ -16,7 +16,8 @@
       if(count($apiarr)==2){
         include_once __DIR__."/controller/".$apiarr[0].".php";
         $controller=new $apiarr[0]();
-        print(json_encode($controller->$apiarr[1]()));
+        $method=$apiarr[1];
+        print(json_encode($controller->$method()));
       }else{
         print_r("非法api调用：101");
       }

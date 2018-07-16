@@ -7,6 +7,9 @@ import App from './app.vue'
 
 componentLibs.install(Vue)
 
+import axios from 'axios'
+Vue.prototype.$ajax = axios
+
 const root=document.createElement("div")
 root.id="root"
 document.body.appendChild(root)
