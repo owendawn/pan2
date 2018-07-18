@@ -1,52 +1,88 @@
 <template>
-    <div class="album py-3 bg-light">
-        <div class="container">
+    <div class="album bg-light">
+        <nav aria-label="breadcrumb row">
+
+            <div class="form-inline  breadcrumb">
+                <div class="form-group row" style="margin-left: 5px;margin-bottom: 0;">
+                    <div class="col-xs-10">
+                        <input ref="searchDiv" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                    <button class="btn btn-outline-success col-xs-2" type="submit" @click="searchClick()">Search</button>
+                </div>
+            </div>
+        </nav>
+        <div class="container my-3">
 
             <div class="row">
-                <div class="col-md-4" v-for="it in [1,2,3]">
+                <div class="col-md-4" v-for="it in videos" v-bind:key="it.id">
                     <div class="card mb-4 box-shadow">
-                        <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22422%22%20height%3D%22224%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20422%20224%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16493d0dc3f%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A21pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16493d0dc3f%22%3E%3Crect%20width%3D%22422%22%20height%3D%22224%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22140.2578125%22%20y%3D%22121.3328125%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                        <img class="card-img-top"  alt="*v*" style=" width: 100%; display: block;" :src="it.img">
                         <div class="card-body">
-                            <p class="card-text">十万个为什么</p>
+                            <p class="card-text">{{it.title}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" @click="viewClick(it.img)">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" @click="goClick(it.link)">Go</button>
                                 </div>
-                                <small class="text-muted">周日</small>
+                                <small class="text-muted">{{parseWeek(it.week)}}</small>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </div>
     </div>
 </template>
 <script>
-    import config from "asserts/util/config"
-    export default{
-        data() {
-            return{
-                text: 'haha'
+import config from "./asserts/util/config";
+export default {
+    data() {
+        return {
+            text: "haha",
+            videos: []
+        };
+    },
+    computed: {},
+    methods: {
+        parseWeek(idx) {
+            const label = [, "一", "二", "三", "四", "五", "六", "日"];
+            return "周" + label[idx];
+        },
+        getList() {
+            this.$axios({
+                method: "post",
+                url: config.baseApiUrl + "?m=VideoController!getVideosByStatus",
+                data: "status=0"
+            }).then(it => {
+                this.videos = it.data.obj;
+            });
+        },
+        goClick(url) {
+            window.open(url);
+        },
+        viewClick(url) {
+            window.open(url);
+        },
+        searchClick(){
+            var v=this.$refs.searchDiv.value;
+            if(v&&v.trim().length>0){
+                window.open("http://v.baidu.com/v?word="+encodeURIComponent(v)+"&ie=utf-8");
             }
-        },
-        methods:{
-            getList(){
-                this.$ajax({
-                    method:"get",
-                    url:config.baseApiUrl+"?m=TestController!test",
-                    data:{a:1}
-                });
-            }
-        },
-        mounted() {
-            this.$emit('onViewIn', this.items);
-            this.getList();
-        },
+        }
+    
+    },
+    mounted() {
+        this.$emit("onViewIn", this.items);
+        this.getList();
     }
+};
 </script>
 <style>
-
+.card-body .card-text{
+    color: #1a8c9b;
+}
+.text-muted {
+    color: #be60bd!important;
+}
 </style>

@@ -8,7 +8,8 @@ import App from './app.vue'
 componentLibs.install(Vue)
 
 import axios from 'axios'
-Vue.prototype.$ajax = axios
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.prototype.$axios = axios
 
 const root=document.createElement("div")
 root.id="root"

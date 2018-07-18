@@ -1,4 +1,4 @@
-<?php 
+<?php  
 class JsonResult{
     var $status;
     var $message;

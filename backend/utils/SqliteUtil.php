@@ -7,15 +7,34 @@ class MySqlite extends SQLite3{
  }
 
 class SqliteUtil{
+    
+	private static $db;
+	
+	private function init(){
+		if (!self::$db) {
+			self::$db = new MySqlite();
+		}		
+    }
 
     public function getDB(){
-        $db = new MySqlite();
-        if(!$db){
-           echo $db->lastErrorMsg();
+        self::init();
+        if(!self::$db){
+           echo self::$db->lastErrorMsg();
            return null;
         } else {
-           return $db;
+           return self::$db;
         }
+    }
+
+    public function fetchList($ret){
+        $result = array();
+		if (!$ret) {
+			return $result;
+		}
+		while($row = $ret->fetchArray(SQLITE3_ASSOC) ){
+			array_push($result, $row);
+		}
+		return $result;	
     }
 
  }
