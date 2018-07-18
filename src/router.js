@@ -6,6 +6,7 @@ import Navbar from './component/nav.vue'
 import App from './app.vue'
 import Home from './home.vue'
 import Cards from './cards.vue'
+import CardEdit from './cardedit.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +25,10 @@ const routes=[
     {
         path: '/cards',
         component:Cards
+    },
+    {
+        path: '/cardedit',
+        component:CardEdit
     },
     // // 重定向
     // {
