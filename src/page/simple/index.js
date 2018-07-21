@@ -1,9 +1,9 @@
 import Vue from 'vue'
 
 import router from './router.js'
-import componentLibs from './component'
+import componentLibs from '../../component/component.js'
 
-import App from './app.vue'
+import App from '../app-only.vue'
 
 componentLibs.install(Vue)
 

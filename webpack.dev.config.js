@@ -8,9 +8,12 @@ const cfg = {
     mode: 'development',
     devtool:'#cheap-module-eval-source-map',
     target:'web',
-    entry: Path.join(__dirname, "src/index.js"),
+    entry:{
+        "video":Path.join(__dirname, "src/page/main/index.js"),
+        "login":Path.join(__dirname, "src/page/simple/index.js"),
+    },
     output: {
-        filename: 'bundle.[hash:8].js',
+        // filename: 'bundle.[hash:8].js',
         path: 'E:\\xampp\\htdocs\\pan2',
         // path: Path.join(__dirname, 'dist'),
     },
@@ -55,14 +58,22 @@ const cfg = {
     },
     plugins: [
         new VueLoaderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new HtmlWebpackPlugin({
             template:'./template.html',
             filename:'index.html',
+            chunks:["video"],
             inject:true,
             hash:true,
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
+        new HtmlWebpackPlugin({
+            template:'./template.html',
+            filename:'login.html',
+            chunks:["login"],
+            inject:true,
+            hash:true,
+        }),
     ],
     devServer:{
         port:8001,
