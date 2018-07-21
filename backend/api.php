@@ -17,7 +17,8 @@
         include_once __DIR__."/controller/".$apiarr[0].".php";
         $controller=new $apiarr[0]();
         $method=$apiarr[1];
-        print(json_encode($controller->$method()));
+        $re=$controller->$method();
+        print(json_encode($re));
       }else{
         print_r("非法api调用：101");
       }

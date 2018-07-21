@@ -17,7 +17,7 @@ class VideoController{
         $videoService=new VideoService();
         $change=$videoService->updateVideoStatusById($status,$id);
         $re=new JsonResult();
-        $re->setStatus($re>0?200:500)->setMessage($re>0?"操作成功":"操作失败，请重试");
+        return $re->setStatus($re>0?200:500)->setMessage($re>0?"操作成功":"操作失败，请重试");
     }
 
 }
