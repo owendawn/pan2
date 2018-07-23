@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <!-- Brand -->
 
-            <router-link to="/"class="navbar-brand">Navbar</router-link>
+            <router-link to="/" class="navbar-brand" style="line-height: 13px;font-size: 20pt;">տ</router-link>
 
 
         <!-- Toggler/collapsibe Button -->
