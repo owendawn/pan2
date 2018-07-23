@@ -64,7 +64,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <div>
                             <div class="form-group">
                                 <label>视频名称</label>
                                 <input type="text" class="form-control" v-model="item.title">
@@ -89,18 +89,28 @@
                             <div class="form-group">
                                 <label>图片网址</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" v-model="item.img">
+                                    <input type="text" class="form-control" ref="imglink" v-model="item.img">
                                     <div class="input-group-append">
-                                        <button class="btn btn-info">Search</button>
+                                        <button class="btn btn-info" @click="getImgs">Search</button>
                                         <button class=" btn btn-outline-success" @click="showPreview">Preview</button>
                                     </div>
                                 </div>
                             </div>
                             <hr>
-                            <div class="form-group">
-                                <img class="form-control" :src="preview" v-if="preview!==null">
+                            <div class="form-group"   v-if="preview!==null">
+                                <img class="form-control" :src="preview">
                             </div>
-                        </form>
+                            <div class="form-group"   v-if="imgs!=null">
+                                <div class="row  justify-content-md-center">
+                                    <div class="col-auto">
+                                        <button class="btn btn-outline-info" @click="turnImg(-1)">&lt;</button>
+                                        <button class="btn btn-info" @click="turnImg(0)">choose</button>
+                                        <button class="btn btn-outline-success" @click="turnImg(1)">&gt;</button>
+                                    </div>
+                                </div>
+                                <img class="form-control" :src="showImgIdx!==-1?imgs[showImgIdx]:''">
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -123,7 +133,9 @@
                 isAdd: true,
                 item: this.emptyItem(),
                 preview:null,
-                userid:-1
+                userid:-1,
+                imgs:null,
+                showImgIdx:-1
             };
         },
         computed: {},
@@ -141,6 +153,36 @@
             parseWeek(idx) {
                 const label = [, "一", "二", "三", "四", "五", "六", "日"];
                 return "周" + label[idx];
+            },
+            turnImg(flag) {
+                switch(flag){
+                    case -1 :this.showImgIdx=this.showImgIdx-1;break;
+                    case 0 : this.item.img=this.imgs[this.showImgIdx]; break;
+                    case 1 :this.showImgIdx=this.showImgIdx+1;break;
+                }
+                if(this.showImgIdx<0){
+                    this.showImgIdx=0;
+                }
+                if(this.showImgIdx>=this.imgs.length){
+                    this.showImgIdx=this.imgs.length-1;
+                }
+                console.log(this.showImgIdx)
+            },
+            getImgs(){
+                this.$axios({
+                    method: "post",
+                    url: config.baseApiUrl + "?m=VideoController!getImgUrlByName",
+                    data: "words="+this.item.title
+                }).then(it => {
+                    if(it.data.obj.length>0){
+                        this.imgs = it.data.obj;
+                        this.showImgIdx=0;
+                    }else{
+                        this.showImgIdx=-1;
+                        this.imgs=null;
+                        alert("搜索异常或查询结果为空")
+                    }
+                });
             },
             getList() {
                 this.$axios({

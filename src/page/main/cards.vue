@@ -20,7 +20,7 @@
         <div class="container my-3">
 
             <div class="row justify-content-md-center">
-                <div class="col col-xs-12 col-md-8 " v-for="it in videos" v-bind:key="it.id">
+                <div class="col-xs-12 col-md-8 " v-for="it in videos" v-bind:key="it.id">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" alt="*v*" style=" width: 100%; display: block;" :src="it.img">
                         <div class="card-body">
