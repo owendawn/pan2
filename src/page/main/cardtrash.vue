@@ -46,10 +46,12 @@
 </template>
 <script>
 import config from "../../asserts/util/config";
+import loginUtil from "../../asserts/util/loginUtil";
 export default {
     data() {
         return {
-            videos: []
+            videos: [],
+            userid:-1
         };
     },
     computed: {},
@@ -62,7 +64,7 @@ export default {
             this.$axios({
                 method: "post",
                 url: config.baseApiUrl + "?m=VideoController!getVideosByStatus",
-                data: "status=1"
+                data: "status=1&userid="+this.userid
             }).then(it => {
                 this.videos = it.data.obj;
             });
@@ -71,19 +73,28 @@ export default {
             this.$axios({
                 method: "post",
                 url: config.baseApiUrl + "?m=VideoController!updateVideoStatusById",
-                data: "status=2&id=" + id
+                data: "status=2&id=" + id+"&userid="+this.userid
             }).then(it => {
                 alert(it.data.message);
+                this.getList();
             });
         },
         restoreCard(id) {
             this.$axios({
                 method: "post",
                 url: config.baseApiUrl + "?m=VideoController!updateVideoStatusById",
-                data: "status=0&id=" + id
+                data: "status=0&id=" + id+"&userid="+this.userid
             }).then(it => {
                 alert(it.data.message);
+                this.getList();
             });
+        }
+    },
+    beforeMount(){
+        if(!loginUtil.checkLogined()){
+            window.location.href=config.baseUrl+"/simple.html#/login";
+        }else{
+            this.userid=loginUtil.getJWTValue("id");
         }
     },
     mounted() {
@@ -93,4 +104,5 @@ export default {
 };
 </script>
 <style>
+
 </style>

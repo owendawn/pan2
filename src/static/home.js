@@ -310,8 +310,10 @@ function init(dom) {
         app.run();
 
     window.addEventListener('resize', function () {
-        canvas.width = w = window.innerWidth;
-        canvas.height = h = window.innerHeight;
+        if(canvas){
+            canvas.width = w = window.innerWidth;
+            canvas.height = h = window.innerHeight;
+        }
     }, false);
     return app;
 }

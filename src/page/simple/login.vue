@@ -32,6 +32,7 @@
 </template>
 <script>
 import config from "../../asserts/util/config";
+import loginUtil from "../../asserts/util/loginUtil";
 export default {
     data(){
         return {
@@ -49,7 +50,8 @@ export default {
             }).then(it => {
                alert(it.data.message);
                if(it.data.status===200){
-                   //session
+                   loginUtil.setKey(it.data.obj);
+                   window.location.href=config.baseUrl+"/index.html#/"
                }
             });
         }

@@ -2,7 +2,9 @@
 
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <!-- Brand -->
-        <a class="navbar-brand" href="#">Navbar</a>
+
+            <router-link to="/"class="navbar-brand">Navbar</router-link>
+
 
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -16,24 +18,22 @@
                     <router-link to="/home"  :class="['nav-link',{ 'active':isActive('#/home') }]">首页</router-link>
                 </li>
                 <li class="nav-item" v-bind:class="{ 'active':isActive('#/hello') }">
-                    <router-link to="/cards" :class="['nav-link',{ 'active':isActive('#/hello') }]">卡片组</router-link>
+                    <router-link to="/cards" :class="['nav-link',{ 'active':isActive('#/cards') }]">卡片组</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                    <a class="nav-link" @click="loginOut" >退出</a>
                 </li>
             </ul>
         </div>
     </nav>
 </template>
 <script>
+    import loginUtil from '../asserts/util/loginUtil'
+    import config from '../asserts/util/config'
 export default {
     data(){
         return{
             href:window.location.href,
-            isShow:false
         }
     },
     methods: {
@@ -43,8 +43,16 @@ export default {
         collapse(){
            $("#collapsibleNavbar").removeClass("show");
            this.href=window.location.href;
+        },
+        loginOut(){
+            loginUtil.cleanKey();
+            window.location.href=config.baseUrl+"/simple.html#/login";
         }
     },
+    mounted(){
+        this.href=window.location.href;
+    },
+
     events:{
 
     }

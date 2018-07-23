@@ -2,7 +2,7 @@
     <div id="app">
         <PNav ref="navbar"></PNav>
         <!-- 对应的组件内容渲染到router-view中 -->
-        <router-view @onViewIn="viewIned" @onShadowBgShow="shadowBgShow"> </router-view>
+        <router-view @onViewIn="viewIned" > </router-view>
     </div>
 </template>
 <script>

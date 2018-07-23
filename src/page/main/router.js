@@ -7,6 +7,7 @@ import OnlyApp from '../app-only.vue'
 import Home from './home.vue'
 import Cards from './cards.vue'
 import CardEdit from './cardedit.vue'
+import CardTrash from './cardtrash.vue'
 
 
 Vue.use(VueRouter)
@@ -18,6 +19,7 @@ const routes=[
     {path: '/home', component:Home},
     {path: '/cards', component:Cards},
     {path: '/cardedit', component:CardEdit},
+    {path: '/cardtrash', component:CardTrash},
     // // 重定向
     // {
     //     path: '/',

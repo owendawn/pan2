@@ -2,7 +2,7 @@
     <div class="album bg-light">
         <nav aria-label="breadcrumb row">
             <div class="form-inline  breadcrumb">
-                <div class="form-group row" style="margin-bottom: 0;">
+                <div class="form-group row pl-5" style="margin-bottom: 0;">
                     <div class="col-xs-9">
                         <input ref="searchDiv" class="form-control" type="search" placeholder="Search" aria-label="Search">
                     </div>
@@ -19,8 +19,8 @@
         </nav>
         <div class="container my-3">
 
-            <div class="row">
-                <div class="col-md-4" v-for="it in videos" v-bind:key="it.id">
+            <div class="row justify-content-md-center">
+                <div class="col col-xs-12 col-md-8 " v-for="it in videos" v-bind:key="it.id">
                     <div class="card mb-4 box-shadow">
                         <img class="card-img-top" alt="*v*" style=" width: 100%; display: block;" :src="it.img">
                         <div class="card-body">
@@ -42,10 +42,12 @@
 </template>
 <script>
     import config from "../../asserts/util/config";
+    import loginUtil from "../../asserts/util/loginUtil";
     export default {
         data() {
             return {
-                videos: []
+                videos: [],
+                userid:-1
             };
         },
         computed: {},
@@ -58,7 +60,7 @@
                 this.$axios({
                     method: "post",
                     url: config.baseApiUrl + "?m=VideoController!getVideosByStatus",
-                    data: "status=0"
+                    data: "status=0&userid="+this.userid
                 }).then(it => {
                     this.videos = it.data.obj;
                 });
@@ -72,12 +74,15 @@
             searchClick() {
                 var v = this.$refs.searchDiv.value;
                 if (v && v.trim().length > 0) {
-                    window.open(
-                        "http://v.baidu.com/v?word=" +
-                        encodeURIComponent(v) +
-                        "&ie=utf-8"
-                    );
+                    window.open("http://v.baidu.com/v?word=" + encodeURIComponent(v) + "&ie=utf-8");
                 }
+            }
+        },
+        beforeMount(){
+            if(!loginUtil.checkLogined()){
+                window.location.href=config.baseUrl+"/simple.html#/login";
+            }else{
+                this.userid=loginUtil.getJWTValue("id");
             }
         },
         mounted() {
